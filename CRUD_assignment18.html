@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container">
+    <form action="" method="post" onsubmit="myfun(event)">
+        <div class="form-group">
+        <label for="email">Name :</label>
+         <input type="text" class="form-control" id="demo"></div>
+         <div class="form-group">
+        <label for="email">Email :</label>
+         <input type="email" class="form-control" id="demo1"></div>
+         <div class="form-group">
+        <label for="email">password :</label>
+         <input type="password" class="form-control" id="demo2"></div>
+         <div class="form-group">
+        <input type="submit"  class="btn btn-primary" name="btn" id="subb" disabled>
+        <button id="save"  class="btn btn-info" onclick="myfun3(this)" disabled>Save</button></div>
+    </form>
+
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <td>s no.</td>
+                <td>Name</td>
+                <td>Email</td>
+                <td>password</td>
+                <td>Action</td>
+            </tr>
+        </thead>
+        <tbody id="t1">
+
+        </tbody>
+    </table>
+</div>
+    <script>
+        document.getElementById("subb").disabled = false;
+
+        var a = 0;
+        function myfun(event) {
+            event.preventDefault();
+            let name = document.getElementById("demo").value;
+            let email = document.getElementById("demo1").value;
+            let password = document.getElementById("demo2").value;
+            let table = document.getElementById("t1");
+            table.innerHTML += `<tr id="${a++}"><td></td><td>${name}</td><td>${email}</td><td>${password}</td><td><button 
+               id="del1" class="btn btn-danger mr-1" onclick="myfun1(this)">delete</button><button id="edit" onclick="myfun2(this)" class="btn btn-secondary">Edit</button></td></tr>`
+            document.getElementById("demo").value = "";
+            document.getElementById("demo1").value = "";
+            document.getElementById("demo2").value = "";
+            let nera = ""
+                for (let i = 0; i < a; i++) {
+                    nera = document.getElementById("t1").rows[i].cells[0];
+                    nera.innerHTML = i + 1;
+                }
+        }
+        function myfun1(e) {
+            p = confirm("do you really want to delete row")
+            if (p == true) {
+                e.parentElement.parentElement.remove();
+                let nera = ""
+                for (let i = 0; i < a; i++) {
+                    nera = document.getElementById("t1").rows[i].cells[0];
+                    nera.innerHTML = i + 1;
+                }
+            }
+        }
+
+        var e_name = "";
+        var e_Email = "";
+        var e_pass = "";
+        var select_row = null;
+        function myfun2(e) {
+            select_row = e;
+            // get the data from table row
+            e_name = e.parentElement.parentElement.cells[1].innerText;
+            e_Email = e.parentElement.parentElement.cells[2].innerText;
+            e_pass = e.parentElement.parentElement.cells[3].innerText;
+            // putting the data in input
+            document.getElementById("demo").value = e_name;
+            document.getElementById("demo1").value = e_Email;
+            document.getElementById("demo2").value = e_pass;
+            // eneable save button and disable submit button
+            document.getElementById("save").disabled = false;
+            document.getElementById("subb").disabled = true;
+            //   myfun3()
+        }
+
+        function myfun3() {
+            document.getElementById("subb").disabled = false;
+            document.getElementById("save").disabled = true;
+            let newname = document.getElementById("demo").value;
+            let newemail = document.getElementById("demo1").value;
+            let newpass = document.getElementById("demo2").value;
+
+            e_name = newname;
+            e_Email = newemail;
+            e_pass = newpass;
+
+            select_row.parentElement.parentElement.cells[1].innerText = e_name;
+            select_row.parentElement.parentElement.cells[2].innerText = e_Email;
+            select_row.parentElement.parentElement.cells[3].innerText = e_pass;
+
+            document.getElementById("demo").value = "";
+            document.getElementById("demo1").value = "";
+            document.getElementById("demo2").value = "";
+        }
+    </script>
+</body>
+
+</html>
